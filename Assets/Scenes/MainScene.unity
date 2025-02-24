@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 749152775}
   - component: {fileID: 749152774}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: TilemapsGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -386,7 +386,7 @@ GameObject:
   - component: {fileID: 1343884055}
   - component: {fileID: 1343884054}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: CursorCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 1877119631}
   - component: {fileID: 1877119630}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Cursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
