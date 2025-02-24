@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 736851930022200517}
   - component: {fileID: 5106028893548930257}
   - component: {fileID: 8342158070162503878}
+  - component: {fileID: 87188537864437382}
+  - component: {fileID: 8987601322801256613}
+  - component: {fileID: 1381069567007840764}
   m_Layer: 6
   m_Name: Warrior_Blue
   m_TagString: Untagged
@@ -100,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitManager: {fileID: 0}
+  currentState: 0
 --- !u!61 &8342158070162503878
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -145,6 +149,42 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1130528, y: 1.3932106}
   m_EdgeRadius: 0
+--- !u!114 &87188537864437382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896034462013667686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b00269a231fc30468eaa38110726fba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8987601322801256613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896034462013667686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052dbeaae069b034e98b34593c09346a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1381069567007840764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896034462013667686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7a38a870b2c1f842bfbe35fd8cdcd51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4583247541429863052
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,7 +200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8875527844213743552
 Transform:
   m_ObjectHideFlags: 0

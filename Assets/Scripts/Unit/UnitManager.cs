@@ -10,6 +10,7 @@ public class UnitManager : MonoBehaviour
     private int _unitsCurrentCount;
     
     [SerializeField] private LayerMask unitLayer;
+    //[SerializeField] private Unit unit;
     private Camera _camera;
 
     private void Awake()
@@ -20,8 +21,7 @@ public class UnitManager : MonoBehaviour
     private void Update()
     {
         if(Input.GetMouseButtonDown(0)) SelectUnit();
-        if(Input.GetMouseButtonDown(1) && _selectedUnitCount > 0) ChangeUnitState();
-        ChangeUnitState();
+        if(Input.GetMouseButtonDown(1) && _selectedUnitCount > 0) HandleUnitState();
         if (_unitsCurrentCount != _selectedUnitCount)
         {
             _unitsCurrentCount = unitsSelected.Count;
@@ -39,31 +39,40 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    private void ChangeUnitState()
+    private void HandleUnitState()
     {
         Vector2 origin = new Vector2
             (_camera.ScreenToWorldPoint(Input.mousePosition).x, _camera.ScreenToWorldPoint(Input.mousePosition).y);
         RaycastHit2D hit  = Physics2D.Raycast(origin, Vector2.zero);
-        if (hit.collider.gameObject.tag == "Ground")
+        
+        if (hit.collider.gameObject.CompareTag("Resource"))
         {
-            // movement logic
+            SetUnitState(states.Farm);
         }
-        else if (hit.collider.gameObject.tag == "Resource")
+        else if (hit.collider.gameObject.CompareTag("HunterTarget"))
         {
-            // farm logic
+            SetUnitState(states.Hunt);
         }
-        else if (hit.collider.gameObject.tag == "HunterTarget")
+        else if(hit.collider.gameObject.CompareTag("Ground"))
         {
-            // hunter logic
+            SetUnitState(states.Movement);
         }
     }
 
-
+    private void SetUnitState(states state)
+    {
+        foreach (var unit in unitsSelected)
+        {
+            unit.currentState = state;
+        }
+    }
+    
     private void SelectUnit()
     {
         Vector2 origin = new Vector2
             (_camera.ScreenToWorldPoint(Input.mousePosition).x, _camera.ScreenToWorldPoint(Input.mousePosition).y);
         RaycastHit2D hit  = Physics2D.Raycast(origin, Vector2.zero, unitLayer);
+        if (hit.collider.gameObject.layer != 6) return;
         if (hit)
         {
             var hitUnitComponent = hit.collider.gameObject.GetComponent<Unit>();
