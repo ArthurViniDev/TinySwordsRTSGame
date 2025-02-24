@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum states { Idle, Movement, Farm, Hunt }
+public enum states { None, Movement, Farm, Hunt }
 
 public class Unit : MonoBehaviour
 {
@@ -8,6 +8,8 @@ public class Unit : MonoBehaviour
     private UnitMovement _unitMovement;
     private UnitFarm _unitFarm;
     private UnitHunt _unitHunt;
+    
+    private Vector3 _movementPosition;
     
     public states currentState;
     private void Start()
@@ -32,10 +34,5 @@ public class Unit : MonoBehaviour
                 _unitHunt.UpdateState();
                 break;
         }
-    }
-
-    public void UnitUpdate()
-    {
-        
     }
 }

@@ -1,17 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class UnitManager : MonoBehaviour
 {
     public List<Unit> units;
     public List<Unit> unitsSelected;
-
-    private int _selectedUnitCount;
+    
     private int _unitsCurrentCount;
+
+    public GameObject positionTargetPrefab;
+    public Vector2 targetPosition;
+    [SerializeField] private Vector2 positionOffset;
     
     [SerializeField] private LayerMask unitLayer;
-    //[SerializeField] private Unit unit;
     private Camera _camera;
+    private Vector2 _origin;
 
     private void Awake()
     {
@@ -20,9 +24,10 @@ public class UnitManager : MonoBehaviour
 
     private void Update()
     {
+        _origin = _camera.ScreenToWorldPoint(Input.mousePosition);
         if(Input.GetMouseButtonDown(0)) SelectUnit();
-        if(Input.GetMouseButtonDown(1) && _selectedUnitCount > 0) HandleUnitState();
-        if (_unitsCurrentCount != _selectedUnitCount)
+        if(Input.GetMouseButtonDown(1) && unitsSelected.Count > 0) HandleUnitState();
+        if (_unitsCurrentCount != unitsSelected.Count)
         {
             _unitsCurrentCount = unitsSelected.Count;
             foreach (var unit in units)
@@ -34,6 +39,7 @@ public class UnitManager : MonoBehaviour
                 else
                 {
                     unit.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    unit.gameObject.GetComponent<Unit>().currentState = states.None;
                 }
             }
         }
@@ -41,9 +47,7 @@ public class UnitManager : MonoBehaviour
 
     private void HandleUnitState()
     {
-        Vector2 origin = new Vector2
-            (_camera.ScreenToWorldPoint(Input.mousePosition).x, _camera.ScreenToWorldPoint(Input.mousePosition).y);
-        RaycastHit2D hit  = Physics2D.Raycast(origin, Vector2.zero);
+        RaycastHit2D hit  = Physics2D.Raycast(_origin, Vector2.zero);
         
         if (hit.collider.gameObject.CompareTag("Resource"))
         {
@@ -55,6 +59,8 @@ public class UnitManager : MonoBehaviour
         }
         else if(hit.collider.gameObject.CompareTag("Ground"))
         {
+            Instantiate(positionTargetPrefab, hit.point + positionOffset, Quaternion.identity);
+            targetPosition = hit.point;
             SetUnitState(states.Movement);
         }
     }
@@ -69,9 +75,7 @@ public class UnitManager : MonoBehaviour
     
     private void SelectUnit()
     {
-        Vector2 origin = new Vector2
-            (_camera.ScreenToWorldPoint(Input.mousePosition).x, _camera.ScreenToWorldPoint(Input.mousePosition).y);
-        RaycastHit2D hit  = Physics2D.Raycast(origin, Vector2.zero, unitLayer);
+        RaycastHit2D hit  = Physics2D.Raycast(_origin, Vector2.zero, unitLayer);
         if (hit.collider.gameObject.layer != 6) return;
         if (hit)
         {
@@ -79,12 +83,10 @@ public class UnitManager : MonoBehaviour
             if(!unitsSelected.Contains(hitUnitComponent))
             {
                 unitsSelected.Add(hitUnitComponent);
-                _selectedUnitCount++;
             }
             else
             {
                 unitsSelected.Remove(hitUnitComponent);
-                _selectedUnitCount--;
             }
         }
     }
